@@ -1,0 +1,25 @@
+import sys
+
+input = sys.stdin.readline
+
+N, M = map(int, input().split())
+
+arr_A = list(map(int, input().split()))
+
+arr_S = []
+tmp = 0
+for i in range(N):
+    tmp = tmp + arr_A[i]
+    arr_S.append(tmp)
+    
+print(arr_S)
+
+result = 0
+
+for i in range(N):
+    arr_S[i] = arr_S[i] % M
+    if arr_S[i] == 0:
+        result+=1
+    
+    
+        

@@ -1,0 +1,37 @@
+import csv
+import os
+import datetime
+
+csv.register_dialect('quoted_string',
+                     delimiter=',',
+                     doublequote=True,
+                     escapechar=None,
+                     lineterminator='\r\n',
+                     quotechar='"',
+                     quoting=csv.QUOTE_NONNUMERIC,
+                     skipinitialspace=False)
+
+input_file = "C:/Users/MZC01-CHANHOJEONG/Desktop/account/AccountTMP4out4.csv"
+output_file = "C:/Users/MZC01-CHANHOJEONG/Desktop/account/AccountTMP4out5.csv"
+column_index_to_modify = [16, 17, 18, 19, 20, 21, 23, 24]
+
+
+# 첫 번째 행 (헤더)을 읽고 쓰기
+with open(input_file, 'r', encoding='utf-8', newline='') as infile:
+    with open(output_file, 'w', encoding='utf-8', newline='') as outfile:
+        reader = csv.reader(infile)
+        writer = csv.writer(outfile, dialect='quoted_string')
+
+        header = next(reader)
+        writer.writerow(header)
+
+        # 데이터 행 처리
+        for row in reader:
+            for columns in column_index_to_modify:
+                try:
+                    if row[columns] is None or row[columns] == '':
+                        row[columns] = False
+                except ValueError:
+                    print(f"Invalid date format in row {reader.line_num}, column {columns}: {row[columns]}")
+            writer.writerow(row)
+			
