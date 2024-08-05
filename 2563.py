@@ -1,35 +1,19 @@
 N = int(input())
 
-# 입력한 라인수 만큼의 각각의 크기는 100
-# 각자의 넓이의 총합에서 겹친 부분을 제외하게 되면 검은 부분의 넓이가 나올것
+paper_array = list()
+area_num = 0
 
-max_area = N * 100
-
-point_array = list()
-
-for i in range(0, N):
-    point_array.append(list(map(int, input().split(sep=" "))))
-
-for i in range(0, N - 1):
-    a = point_array[i][0]
-    b = point_array[i][1]
-
-    c = point_array[i+1][0]
-    d = point_array[i+1][1]
+for i in range(N):
+    paper_array.append(list(map(int, input().split(sep=" "))))
     
-    x = 0
-    y = 0
     
-    if a < c + 10 or c < a + 10:
-        x = abs(c + 10 - a) 
-        print("x : ", x)
-    
-    if b < d + 10 or d < b + 10:
-        y = abs(d + 10 - b)
-        print("y : ", y)
+for i in range(0, 100):
+    for j in range(0, 100):
         
-    tmp_area = x * y
-    
-    max_area -= tmp_area
+        for k, l in paper_array:
+            if (i >= k and i < k + 10) and (j >= l and j < l + 10):
+                area_num += 1
+                break
 
-print(max_area)
+
+print(area_num)
