@@ -1,5 +1,9 @@
 import sys
+import math
 
-tmp_list = sys.stdin.readlines().strip()
+num_list = [int(sys.stdin.readline().strip()) for i in range(5)]
 
-print(tmp_list)
+num_list.sort(reverse=False)
+
+print(int(sum(num_list)/len(num_list)))
+print(num_list[2])
