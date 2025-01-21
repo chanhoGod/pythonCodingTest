@@ -1,21 +1,21 @@
+import sys
 from collections import deque
 
-N = int(input())
+read = sys.stdin.readline
 
-card_deck = deque()
+N = int(read().strip())
 
-for i in range(1, N + 1):
-    card_deck.append(i)
+A = deque(i for i in range(1, N + 1))
 
-change_time = True
+flag = True
 
-while len(card_deck) > 1:
-    if change_time == True:
-        card_deck.popleft()
-        change_time = False
+while len(A) > 1:
+    if flag:
+        A.popleft()
+        flag = False
     else:
-        card_pop = card_deck.popleft()
-        card_deck.append(card_pop)
-        change_time = True
+        A.append(A.popleft())
+        flag = True
 
-print(card_deck[0])
+
+print(A[0])
