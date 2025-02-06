@@ -1,17 +1,18 @@
 import math
 
-def prime_number(a):
-    for i in range(2, int(math.sqrt(a)) + 1):
-        if a % i == 0:
-            return False
-    
-    return True
-
 N, M = map(int, input().split())
 
-for i in range(N, M + 1):
-    if i == 1:
-        continue
-    
-    if prime_number(i) == True:
+A = [0] * (M+1)
+
+for i in range(2, M+1):
+    A[i] = i
+
+for i in range(2, M+1):
+    for j in range(2, int(math.sqrt(i)) + 1):
+        if i % j == 0 and i != j:
+            A[i] = 0
+            break
+            
+for i in A:
+    if i != 0 and i >= N:
         print(i)
