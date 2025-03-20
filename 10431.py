@@ -12,4 +12,3 @@ for i in range(N):
             if A[j] > A[k]:
                 result += 1
     print(casenum, result)
-    
