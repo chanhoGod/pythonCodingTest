@@ -1,17 +1,15 @@
-N, M = map(int, input().split(sep=" "))
+from itertools import permutations
 
-card_list = list(map(int, input().split(sep=" ")))
+N, M = map(int, input().split())
+A = list(map(int, input().split()))
 
-max_card_sum = 0
+result = 0
 
-for i in range(0, N-2):
-    for j in range(i+1, N-1):
-        for k in range(j+1, N):
-            card_sum = card_list[i] + card_list[j] + card_list[k]
-            
-            if card_sum <= M:
-                if max_card_sum < card_sum:
-                    max_card_sum = card_sum
-                    
-                    
-print(max_card_sum)
+for per in permutations(A):
+    tmp = 0
+    for i in range(N-2):
+        tmp = per[i] + per[i+1] + per[i+2]
+        if tmp <= M:
+            result = max(result, tmp)
+
+print(result)
