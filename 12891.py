@@ -1,53 +1,57 @@
-import sys
-
-read = sys.stdin.readline
-
-N, M = map(int, read().strip().split())
-
-dna = read().strip()
-
-origin_list = list(map(int, read().strip().split()))
-check_list = [0] * 4
-cnt = 0
-
-def add_myList(c):
-    global check_list
+def word_count(tmpstr, A):
     
-    if c == 'A':
-        check_list[0] += 1
-    elif c == 'C':
-        check_list[1] += 1
-    elif c == 'G':
-        check_list[2] += 1
-    elif c == 'T':
-        check_list[3] += 1
-
-
-def sub_myList(c):
-    global check_list
+    for i in tmpstr:
+        if i == 'A':
+            A[0] -= 1
+        elif i == 'C':
+            A[1] -= 1
+        elif i == 'G':
+            A[2] -= 1
+        elif i == 'T':
+            A[3] -= 1
+        
+        if A[0] <= 0 and A[1] <= 0 and A[2] <= 0 and A[3] <= 0:
+            return True
     
-    if c == 'A':
-        check_list[0] -= 1
-    elif c == 'C':
-        check_list[1] -= 1
-    elif c == 'G':
-        check_list[2] -= 1
-    elif c == 'T':
-        check_list[3] -= 1
+    return False
 
-
-def compare_list_cnt(A):
-    if sum(A) != 0 :
-        return False
-    else:
+def list_count(A):
+    if A[0] <= 0 and A[1] <= 0 and A[2] <= 0 and A[3] <= 0:
         return True
 
-for i in range(0, N):
-    if i >= M:
-        sub_myList(dna[i - M])
-        
-    add_myList(dna[i])
-    if check_list_cnt(check_list):
+N, M = map(int, input().split())
+
+O = list(input())
+A = list(map(int, input().split()))
+
+cnt = 0
+tmp_str = O[:M]
+if word_count(tmp_str, A):
+    cnt += 1
+
+for i in range(0, N-M):
+    s = tmp_str[0]
+    e = O[M+i]
+    if s == 'A':
+        A[0] += 1
+    elif s == 'C':
+        A[1] += 1
+    elif s == 'G':
+        A[2] += 1
+    elif s == 'T':
+        A[3] += 1
+    
+    if e == 'A':
+        A[0] -= 1
+    elif e == 'C':
+        A[1] -= 1
+    elif e == 'G':
+        A[2] -= 1
+    elif e == 'T':
+        A[3] -= 1
+    tmp_str.pop(0)
+    tmp_str.append(e)
+    if list_count(A):
         cnt += 1
 
 print(cnt)

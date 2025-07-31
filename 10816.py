@@ -1,20 +1,19 @@
 import sys
 
-N = int(sys.stdin.readline().strip())
-N_list = list(map(int, sys.stdin.readline().strip().split()))
+read = sys.stdin.readline
 
-N_dict = {key:0 for key in N_list}
+N = int(read())
+N_list = list(map(int, read().split()))
 
-for i in N_list:
-    N_dict[i] += 1
+M = int(read())
+M_list = list(map(int, read().split()))
+M_dict = {key:0 for key in M_list}
 
-M = int(sys.stdin.readline().strip())
-M_list = list(map(int, sys.stdin.readline().strip().split()))
 
-for i in range(0, len(M_list)):
-    if M_list[i] in N_dict:
-        M_list[i] = N_dict[M_list[i]]
-    else:
-        M_list[i] = 0
+for n in N_list:
+    if n in M_dict:
+        M_dict[n] += 1
 
-print(*M_list)
+
+for m in M_list:
+    print(M_dict[m], end=' ')

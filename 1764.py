@@ -1,34 +1,13 @@
-N, M = map(int, input().split())
+import sys
 
-rtn_dict = dict()
+read = sys.stdin.readline
 
-for i in range(N):
-    str = input()
-    
-    if str not in rtn_dict:
-        rtn_dict[str] = 1
-    else:
-        rtn_dict[str] += 1
-        
+N, M = map(int, read().split())
 
-for i in range(M):
-    str = input()
-    
-    if str not in rtn_dict:
-        rtn_dict[str] = 1
-    else:
-        rtn_dict[str] += 1
+N_set = set(read().strip() for i in range(N))
+M_set = set(read().strip() for i in range(M))
 
-rtn_cnt = 0
-rtn_list = list()
-for key, value in rtn_dict.items():
-    if value > 1:
-        rtn_cnt += 1
-        rtn_list.append(key)
-        
+answer = sorted(N_set & M_set)
 
-print(rtn_cnt)
-rtn_list.sort(reverse=False)
-
-for i in rtn_list:
-    print(i)
+print(len(answer))
+print('\n'.join(answer))
