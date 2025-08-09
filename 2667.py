@@ -1,46 +1,33 @@
+import sys
 from collections import deque
 
-N = int(input())
+read = sys.stdin.readline
 
-O = [[-1] * (N+1) for i in range(N+1)]
-visited = [[False] * (N+1) for i in range(N+1)]
-for i in range(1, N+1):
-    A = list(map(int, input()))
-    O[i] = [-1] + A
+N = int(read())
 
-def bfs(O, x, y):
-    B = deque()
-    B.append((x, y))
-    result = 0
-    while len(B) > 0:
-        a, b = B.popleft()
-        if O[a][b] == 1:
-            if visited[a][b] == False:
-                visited[a][b] = True
-                result += 1
-                if b < N:
-                    B.append((a, b+1))
-                
-                if a > 0:
-                    B.append((a-1, b))
-                
-                if a < N:
-                    B.append((a+1, b))
-                    
-                if b > 0:
-                    B.append((a, b-1))
-    
-    return result
+N_list = [[int(i) for i in read().strip()] for _ in range(N)]
+visited = [[False] * N for i in range(N)]
 
-answer = list()
-for i in range(1, N+1):
-    for j in range(1, N+1):
-        if visited[i][j] == False:
-            a = bfs(O, i, j)
-            if a != 0:
-                answer.append(a)
+dq = deque()
+result = 0
+result_list = []
 
-answer = sorted(answer)
-print(len(answer))
-for i in answer:
-    print(i)
+for i in range(N):
+    for j in range(N):
+        if visited[i][j] == False and N_list[i][j] == 1:
+            count = 1
+            dq.append((i, j))
+            visited[i][j] = True
+            while dq:
+                x, y = dq.popleft()
+                for dx, dy in [(-1, 0), (1, 0), (0, 1), (0, -1)]:
+                    nx, ny = x + dx, y + dy
+                    if 0 <= nx < N and 0 <= ny < N and not visited[nx][ny] and N_list[nx][ny] == 1:
+                        visited[nx][ny] = True
+                        dq.append((nx, ny))
+                        count += 1
+            result += 1
+            result_list.append(count)
+            
+print(result)
+print(*sorted(result_list), sep='\n')

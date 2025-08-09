@@ -1,33 +1,25 @@
-from collections import deque
+import sys
 
-N = int(input())
-K = int(input())
+read = sys.stdin.readline
 
-O = [[] for _ in range(N+1)]
-visited = [False] * (N+1) 
+N = int(read().strip())
+M = int(read().strip())
 
-for i in range(K):
-    a, b = map(int, input().split())
+N_list = [[] for i in range(N+1)]
+for i in range(M):
+    a, b = map(int, read().strip().split())
+    N_list[a].append(b)
+    N_list[b].append(a)
+
+visited = [False] * (N+1)
+count = 0
+def dfs(node, visited):
+    visited[node] = True
+    global count
+    count += 1
+    for i in N_list[node]:
+        if not visited[i]:
+            dfs(i, visited)
     
-    O[a].append(b)
-    O[b].append(a)
-
-cnt = 0
-
-def bfs(val):
-    global cnt
-    A = deque()
-    A.append(val)
-    visited[val] = True
-    
-    while len(A) > 0:
-        a = A.popleft()
-        
-        for idx in O[a]:
-            if visited[idx] == False:
-                visited[idx] = True
-                cnt += 1
-                A.append(idx)
-
-bfs(1)
-print(cnt)
+dfs(1, visited)
+print(count - 1)
