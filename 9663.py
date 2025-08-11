@@ -1,19 +1,27 @@
 N = int(input())
 
-def check_column(x):
-    for i in range(x):
-        visited[i]
+visited = [0] * N
 
-def dfs():
-    for i in range(0, N):
-        if visited[i]:
-            continue
-        
-        visited[i] = True
-        
 
-visited = [[False] * N]
-answer_num = 0
+def check_queen(row, col):
+    for i in range(row):
+        if visited[i] == col or abs(i - row) == abs(visited[i] - col):
+            return False
+    
+    return True
 
-dfs()
-print(answer_num)
+
+def dfs(row):
+    if row == N:
+        return 1
+    
+    count = 0
+    for col in range(N):
+        if check_queen(row, col):
+            visited[row] = col
+            count += dfs(row + 1)
+    
+    return count
+
+
+print(dfs(0))

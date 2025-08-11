@@ -1,40 +1,60 @@
-def calculate(a, answer_num):
-    global max_num
-    global min_num
+import sys
+
+read = sys.stdin.readline
+sys.setrecursionlimit(10**5)
+
+N = int(read())
+
+N_list = list(map(int, read().split()))
+
+op_list = list(map(int, read().split()))
+
+max_value = float('-inf')
+min_value = float('inf')
+
+def sumVal(a, b):
+    return a + b
+
+def subVal(a, b):
+    return a - b
+
+def mulVal(a, b):
+    return a * b
+
+def divVal(a, b):
+    if a < 0:
+        return -(-a // b)
+    else:
+        return a // b
+
+
+def dfs(depth, value):
+    global max_value, min_value
+    if depth == N:
+        max_value = max(max_value, value)
+        min_value = min(min_value, value)
+        return
     
-    if a == len(N_list) - 1:
-        max_num = max(answer_num, max_num)
-        min_num = min(answer_num, min_num)
-        
-    if operators[0] != 0:
-        operators[0] -=1
-        calculate(a+1, answer_num + N_list[a+1])
-        operators[0] +=1
-        
-    if operators[1] != 0:
-        operators[1] -=1
-        calculate(a+1, answer_num - N_list[a+1])
-        operators[1] +=1
-        
-    if operators[2] != 0:
-        operators[2] -=1
-        calculate(a+1, answer_num * N_list[a+1])        
-        operators[2] +=1
-        
-    if operators[3] != 0:
-        operators[3] -=1
-        calculate(a+1, int(answer_num / N_list[a+1]))        
-        operators[3] +=1
-            
-N = int(input())
+    next_num = N_list[depth]
+    
+    if op_list[0] > 0:
+        op_list[0] -= 1
+        dfs(depth+1, sumVal(value, next_num))
+        op_list[0] += 1
+    if op_list[1] > 0:
+        op_list[1] -= 1
+        dfs(depth+1, subVal(value, next_num))
+        op_list[1] += 1
+    if op_list[2] > 0:
+        op_list[2] -= 1
+        dfs(depth+1, mulVal(value, next_num))
+        op_list[2] += 1
+    if op_list[3] > 0:
+        op_list[3] -= 1
+        dfs(depth+1, divVal(value, next_num))
+        op_list[3] += 1
 
-max_num = -(1000000000)
-min_num = 1000000000
-answer = 0
+dfs(1, N_list[0])
 
-N_list = list(map(int, input().split()))
-operators = list(map(int, input().split()))
-
-calculate(0, N_list[0])
-print(max_num)
-print(min_num)
+print(max_value)
+print(min_value)

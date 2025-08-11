@@ -1,44 +1,28 @@
 import sys
 from collections import deque
-read = sys.stdin.readline
 
-# 상하좌우
-px = [1, -1, 0, 0]
-py = [0, 0, -1, 1]
+read = sys.stdin.readline
 
 N, M = map(int, read().split())
 
-O = [[0] * M for i in range(N)]
+target_list = [list(map(int, read().strip())) for _ in range(N)]
+visited = [[False] * M for _ in range(N)]
 
-for i in range(N):
-    idx = list(input())
-    for j in range(M):
-        O[i][j] = int(idx[j])
+target_queue = deque()
+target_queue.append((0, 0, 1))
+visited[0][0] = True
+result = 1
 
-visit_graph = [[False] * M for _ in range(N)] 
-
-
-def bfs(x, y):
+while target_queue:
+    x, y, cnt = target_queue.popleft()
+    if x == N-1 and y == M-1:
+        result = cnt
+        break
     
-    queue = deque()
-    queue.append((x, y))
-    
-    visit_graph[x][y] = True
-    
-    while queue:
-        now = queue.popleft()
-        
-        for i in range(4):
-            dx = now[0] + px[i]
-            dy = now[1] + py[i]
-            
-            if dx >= 0 and dy >= 0 and dx < N and dy < M:
-                if O[dx][dy] != 0 and visit_graph[dx][dy] != True:
-                    visit_graph[dx][dy] = True
-                    O[dx][dy] = O[now[0]][now[1]] + 1
-                    queue.append((dx, dy))
-                
+    for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+        nx, ny = x + dx, y + dy
+        if 0 <= nx < N and 0 <= ny < M and not visited[nx][ny] and target_list[nx][ny] == 1:
+            visited[nx][ny] = True
+            target_queue.append((nx, ny, cnt + 1))
 
-
-bfs(0, 0)
-print(O[N-1][M-1])
+print(result)
