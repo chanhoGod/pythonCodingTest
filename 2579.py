@@ -1,15 +1,18 @@
 N = int(input())
 
-N_list = [0] * 301
-for i in range(N):
-    N_list[i] = int(input())
+O = [0] + [int(input()) for _ in range(N)]
 
-A_list = [0] * len(N_list)
-A_list[0] = N_list[0]
-A_list[1] = N_list[0] + N_list[1]
-A_list[2] = max(N_list[0] + N_list[2], N_list[1] + N_list[2])
+dp = [0] * (301)
 
-for i in range(3, N):
-    A_list[i] = max(N_list[i-1] + A_list[i-3], A_list[i-2]) + N_list[i]
+if N == 1:
+    print(O[1])
+elif N == 2:
+    print(O[1] + O[2])
+else:
+    dp[1] = O[1]
+    dp[2] = O[1] + O[2]
 
-print(A_list[N-1])
+    for i in range(3, N+1):
+        dp[i] = max(dp[i-2] + O[i], dp[i-3] + O[i-1] + O[i])
+
+    print(dp[N])
