@@ -1,26 +1,35 @@
-N = int(input())
+import sys
 
-O = []
+read = sys.stdin.readline
 
-A = list(map(int, input().split()))
-O = [0] + A
+N = int(read())
 
-M = int(input())
+O = list(map(int, read().split()))
+M = int(read())
 
-start = 0
+start = 1
 end = max(O)
 result = 0
+def can_make(mid):
+    
+    cnt = 0
+    for i in range(N):
+        idx = O[i]
+        if idx <= mid:
+            cnt += idx
+        else:
+            cnt += mid
+    
+    return cnt
+
 while start <= end:
     mid = (start + end) // 2
     
-    sumval = 0
-    for i in range(1, N+1):
-        sumval += min(mid, O[i])
-    
-    if sumval > M:
+    tmp_cnt = can_make(mid)
+    if tmp_cnt > M:
         end = mid - 1
     else:
-        start = mid + 1
         result = mid
+        start = mid + 1
 
 print(result)

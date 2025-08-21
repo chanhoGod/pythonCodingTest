@@ -1,23 +1,22 @@
-N = int(input())
+import sys
+
+read = sys.stdin.readline
+
+N = int(read())
+
 
 for i in range(N):
-    str = input()
-    
-    cnt = 0
-    
-    for j in str:
-        if j == "(":
-            cnt += 1
-        else:
-            cnt -= 1
-
-        if cnt < 0:
-            print("NO")
+    O = list(read().strip())
+    rtn = 0
+    while O:
+        idx = O.pop(0)
+        if rtn < 0:
             break
         
+        if idx == ')':
+            rtn -= 1
+        else:
+            rtn += 1
     
-    if cnt == 0:
-        print("YES")
-    elif cnt > 0:
-        print("NO")
+    print('YES' if rtn == 0 else 'NO')
     

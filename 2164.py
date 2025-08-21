@@ -1,21 +1,15 @@
-import sys
 from collections import deque
 
-read = sys.stdin.readline
+N = int(input())
 
-N = int(read().strip())
+O = deque([i for i in range(1, N+1)])
 
-A = deque(i for i in range(1, N + 1))
+while O:
+    if len(O) == 1:
+        print(O[0])
+        break
+        
+    O.popleft()
+    idx = O.popleft()
+    O.append(idx)
 
-flag = True
-
-while len(A) > 1:
-    if flag:
-        A.popleft()
-        flag = False
-    else:
-        A.append(A.popleft())
-        flag = True
-
-
-print(A[0])

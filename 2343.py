@@ -1,32 +1,35 @@
-import sys
+N, M = map(int, input().split())
 
-read = sys.stdin.readline
+O = list(map(int, input().split()))
 
-N, M = map(int, read().strip().split())
 
-A = list(map(int, read().strip().split()))
+start = max(O)
+end = sum(O)
+result = 0
 
-start = max(A)
-end = sum(A)
+def can_install(mid):
+    m = 1
+    tmp_cnt = 0
+    for i in range(N):
+        tmp_cnt += O[i]
+        if tmp_cnt <= mid:
+            continue
+        else:
+            m += 1
+            tmp_cnt = O[i]
+            if m > M:
+                return False
+    
+    return m <= M
 
 while start <= end:
     mid = (start + end) // 2
-    sumValue = 0
-    cnt = 0
     
-    for i in range(len(A)):
-        if sumValue + A[i] > mid:
-            cnt += 1
-            sumValue = 0
-        
-        sumValue += A[i]
-    
-    if sumValue != 0:
-        cnt += 1
-    
-    if cnt > M:
-        start = mid + 1
-    else:
+    if can_install(mid):
+        result = mid
         end = mid - 1
-
-print(start)
+    else:
+        start = mid + 1
+        
+        
+print(result)

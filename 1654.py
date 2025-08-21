@@ -1,26 +1,21 @@
 K, N = map(int, input().split())
 
-O = [0] * (K+1)
-
-for i in range(1, K+1):
-    O[i] = int(input())
+O = [int(input()) for _ in range(K)]
 
 start = 1
 end = max(O)
 result = 0
 
+
 while start <= end:
     mid = (start + end) // 2
     
-    maxval = mid
-    sumval = 0
-    for j in range(1, K+1):
-        sumval += O[j] // maxval
+    sum_val = sum(o//mid for o in O if o >= mid)
     
-    if sumval < N:
-        end = mid - 1
-    else:
-        result = mid
+    if sum_val >= N:
         start = mid + 1
-
+        result = mid
+    else:
+        end = mid - 1
+        
 print(result)

@@ -1,34 +1,24 @@
-def check_sentense_cnt(str):
-    rtnbln = True
-    
-    nowChar = ""
-    tmp_dict = dict()
-    
-    
-    for i in str:
-
-        if i not in tmp_dict:
-            tmp_dict[i] = 1
-        else:
-            if i == nowChar:
-                tmp_dict[i] += 1
-            else:
-                rtnbln = False
-                break
-            
-        nowChar = i
-    
-    
-    return rtnbln
-
 N = int(input())
-S = 0
+result = 0
 
+def check_str(S):
+    D = dict()
+    last_str = ''
+
+    for k in S:
+        if k not in D:
+            D[k] = 1
+            last_str = k
+        else:
+            if last_str != k:
+                return False
+    
+    return True
 
 for i in range(N):
-    str = input()
-    if check_sentense_cnt(str) == True:
-        S += 1
+    S = str(input().strip())
+    if check_str(S):
+        result += 1
 
 
-print(S)
+print(result)    

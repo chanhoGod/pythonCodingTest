@@ -2,32 +2,28 @@ import sys
 
 read = sys.stdin.readline
 
+
 N = int(read())
-
-A = list(map(int, read().strip().split()))
-A = sorted(A)
+N_list = sorted(list(map(int, read().split())))
 M = int(read())
-B = list(map(int, read().strip().split()))
+M_list = list(map(int, read().split()))
 
-for i in range(len(B)):
-    find = False
-    target = B[i]
-    
+def find_num(x):
     start = 0
-    end = len(A) - 1
+    end = N-1
     
     while start <= end:
         mid = (start + end) // 2
         
-        if target > A[mid]:
+        if N_list[mid] == x:
+            return 1
+        elif N_list[mid] < x:
             start = mid + 1
-        elif target < A[mid]:
+        else:
             end = mid - 1
-        elif target == A[mid]:
-            find = True
-            break
-    if find == True:
-        print(1)
-    else:
-        print(0)
+    
+    return 0
 
+
+for i in M_list:
+    print(find_num(i))
