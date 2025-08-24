@@ -6,8 +6,8 @@ read = sys.stdin.readline
 N = int(read())
 queue = PriorityQueue()
 
-
 for i in range(N):
+    
     x = int(read())
     
     if x == 0:
@@ -17,4 +17,4 @@ for i in range(N):
             key, value = queue.get()
             print(value)
     else:
-        queue.put((abs(x), x))
+        queue.put((-x, x))

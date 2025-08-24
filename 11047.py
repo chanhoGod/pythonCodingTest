@@ -1,18 +1,15 @@
-import sys
+N, K = map(int, input().split())
 
-read = sys.stdin.readline
+O = [int(input()) for _ in range(N)]
+result = 0
+while O:
+    coin = O.pop()
+    if K < coin:
+        continue
+    else:
+        a = K // coin
+        b = K % coin
+        K = b
+        result += a
 
-
-N, K = map(int, read().strip().split())
-
-A = [int(read().strip()) for _ in range(N)]
-
-cnt = 0
-
-for i in reversed(A):
-    if K >= i:
-        div = K // i
-        K = K % i
-        cnt += div
-
-print(cnt)
+print(result)
