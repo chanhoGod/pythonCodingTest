@@ -3,22 +3,20 @@ import sys
 read = sys.stdin.readline
 
 N, M = map(int, read().split())
+O = list(map(int, read().split()))
+start = 0
+end = 0
 
-N_list = list(map(int, read().split()))
+sum_val = 0
+result = 0
+while start < N:
+    if sum_val < M and end < N: 
+        sum_val += O[end]
+        end += 1
+    else:
+        if sum_val == M:
+            result += 1
+        sum_val -= O[start]
+        start += 1
 
-left = 0
-right = 0
-sum_value = 0
-count = 0
-
-while right < N:
-    sum_value += N_list[right]
-    right += 1
-    
-    while sum_value >= M:
-        if sum_value == M:
-            count += 1
-        sum_value -= N_list[left]
-        left += 1
-
-print(count)
+print(result)

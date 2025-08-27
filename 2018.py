@@ -1,29 +1,22 @@
-# 투포인터 문제
-# 시작점과 끝점을 계산해서 결과가 합보다 작으면 end++, 결과가 합보다 크면 start++
+N = int(input())
 
-import sys
 
-readline = sys.stdin.readline
+start = 1
+end = 1
+result = 1
+sum_value = 0
 
-N = int(readline().strip())
-
-start_point = 1
-end_point = 2
-n = 1
-count = 0
-
-while start_point <= N :
+while start <= N//2:
     
-    if n == N :
-        count += 1
-        n -= start_point
-        start_point += 1
-    elif n > N :
-        n -= start_point
-        start_point += 1
-    elif n < N :
-        n += end_point
-        end_point += 1
+    while sum_value <= N:
+        if sum_value == N:
+            result += 1
+        sum_value += end
+        end += 1
+    
+    while sum_value > N:
+        sum_value -= start
+        start += 1
     
 
-print(count)
+print(result)

@@ -2,29 +2,27 @@ import sys
 
 read = sys.stdin.readline
 
-N = int(read().strip())
+N = int(read())
+M = int(read())
 
-M = int(read().strip())
+O = sorted(list(map(int, read().split())))
 
-O = list(map(int, read().strip().split()))
-O.sort()
+start = 0
+end = N-1 
+result = 0
 
-start_point = 0
-end_point = N - 1
-count = 0
 
-while start_point < end_point :
-    a = O[start_point]
-    b = O[end_point]
+while start < end:
+    first = O[start]
+    last = O[end]
     
-    if a + b > M :
-        end_point -= 1
-    elif a + b < M :
-        start_point += 1
-    elif a + b == M:
-        if start_point != end_point:
-            count += 1
-            end_point -= 1
+    if first + last == M:
+        result += 1
+        start += 1
+        end -= 1
+    elif first + last > M :
+        end -= 1
+    elif first + last < M:
+        start += 1
 
-
-print(count)
+print(result)
