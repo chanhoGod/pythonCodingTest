@@ -1,13 +1,16 @@
 import sys
 
+
 read = sys.stdin.readline
 
 N = int(read())
-T = [0] + list(map(int, read().split()))
-dp = [0] * (N + 1)
 
-for i in range(1, N+1):
-    
-    dp[i] = max(dp[i-1] + T[i], T[i])
+O = list(map(int, read().split()))
 
-print(max(dp[1:]))
+DP = [0] * N
+DP[0] = O[0]
+
+for i in range(1, N):
+    DP[i] = max(DP[i-1] + O[i], O[i])
+
+print(max(DP))
