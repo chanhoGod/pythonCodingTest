@@ -6,18 +6,20 @@ queue.append((N, 0))
 visited = [False] * 100001
 
 while queue:
-    a, cnt = queue.popleft()
-    visited[a] = True
-    if a == K:
-        print(cnt)
+    p, t = queue.popleft()
+    
+    if p == K:
+        print(t)
         break
     
-    if a > 0 and not visited[a-1]:
-        visited[a-1] = True
-        queue.append((a-1, cnt+1))
-    if a+1 < 100001 and not visited[a+1]:
-        visited[a+1] = True
-        queue.append((a+1, cnt+1))
-    if a*2 < 100001 and not visited[a*2]:
-        visited[a*2] = True
-        queue.append((a*2, cnt+1))
+    if p + 1 < 100001 and not visited[p+1]:
+        visited[p+1] = True
+        queue.append((p+1, t+1))
+    
+    if p - 1 >= 0 and not visited[p-1]:
+        visited[p-1] = True
+        queue.append((p-1, t+1))
+    
+    if p * 2 < 100001 and not visited[p*2]:
+        visited[p*2] = True
+        queue.append((p*2, t+1))
