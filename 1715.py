@@ -1,22 +1,22 @@
 import sys
-from queue import PriorityQueue
+import heapq
 
 read = sys.stdin.readline
 
-N = int(read().strip())
+N = int(read())
 
-A = PriorityQueue()
-for i in range(N):
-    idx = int(read().strip())
-    A.put(idx)
+O = [int(read()) for _ in range(N)]
+heapq.heapify(O)
 
-deck = 0
+result = 0
 
-while A.qsize() > 1:
-    dummy1 = A.get()
-    dummy2 = A.get()
-    k = dummy1 + dummy2
-    deck += k
-    A.put(k)
+
+while len(O) > 1:
+    a = heapq.heappop(O)
+    b = heapq.heappop(O)
     
-print(deck)
+    c = a + b
+    result += c
+    heapq.heappush(O, c)
+
+print(result)

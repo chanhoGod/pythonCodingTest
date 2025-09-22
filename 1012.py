@@ -1,33 +1,37 @@
 import sys
-from collections import deque
+
 read = sys.stdin.readline
+sys.setrecursionlimit(10**6)
 
 T = int(read())
+
+def dfs(x, y):
+    if visited[x][y]:
+        return False
+    
+    visited[x][y] = True
+    next = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+    
+    for dx, dy in next:
+        nx, ny = x + dx, y + dy
+        if 0 <= nx < N and 0 <= ny < M and not visited[nx][ny] and O[nx][ny] == 1:
+            dfs(nx, ny)
+        
+
 for _ in range(T):
+    
     M, N, K = map(int, read().split())
-
-    target_list = [[0] * N for _ in range(M)]
-    target_queue = deque()
-    visited = [[False] * N for _ in range(M)]
-
+    O = [[0] * M for _ in range(N)]
+    visited = [[True] * M for _ in range(N)]
     for i in range(K):
-        x, y = map(int, read().split())
-        target_list[x][y] = 1
-
+        a, b = map(int, read().split())
+        O[b][a] = 1
+        visited[b][a] = False
+    
     result = 0
-    for i in range(M):
-        for j in range(N):
-            if target_list[i][j] == 1 and visited[i][j] == False:
-                target_queue.append((i, j))
-                visited[i][j] = True
-                
-                while target_queue:
-                    x, y = target_queue.popleft()
-                    
-                    for dx, dy in ((-1, 0), (1, 0), (0, -1), (0, 1)):
-                        nx, ny = x + dx, y + dy
-                        if 0 <= nx < M and 0 <= ny < N and target_list[nx][ny] == 1 and not visited[nx][ny]:
-                            target_queue.append((nx, ny))
-                            visited[nx][ny] = True
+    for i in range(N):
+        for j in range(M):
+            if O[i][j] == 1 and not visited[i][j]:
+                dfs(i, j)
                 result += 1
     print(result)

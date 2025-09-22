@@ -2,32 +2,28 @@ import sys
 
 read = sys.stdin.readline
 sys.setrecursionlimit(10**6)
-
 N, M = map(int, read().split())
 
-target_list = [[] for _ in range(N+1)]
-
+O = [[] for i in range(N+1)]
 for i in range(M):
-    x, y = map(int, read().split())
-    target_list[x].append(y)
-    target_list[y].append(x)
+    a, b = map(int, read().split())
+    
+    O[a].append(b)
+    O[b].append(a)
 
 visited = [False] * (N+1)
-visited[0] = True  # 0번 인덱스는 사용하지 않음
-result = 0
 
-def dfs(start, visited):
-    
-    visited[start] = True
-    
-    for i in target_list[start]:
+def dfs(idx) -> int:
+    visited[idx] = True
+    for i in O[idx]:
         if not visited[i]:
-            dfs(i, visited)
-        
-
+            visited[i] = True
+            dfs(i)
+    
+    return 1
+result = 0
 for i in range(1, N+1):
     if not visited[i]:
-        dfs(i, visited)
-        result += 1
+        result += dfs(i)
 
 print(result)
