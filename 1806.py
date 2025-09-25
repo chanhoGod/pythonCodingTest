@@ -2,26 +2,27 @@ import sys
 
 read = sys.stdin.readline
 
-N, S = map(int, read().split())
+N, K = map(int, read().split())
 
-N_list = list(map(int, read().split()))
+O = list(map(int, read().split()))
 
 
-left = 0
-right = 0
-sum_value = 0
-size = float('inf')
+result = float('inf')
 
-while right < N:
-    sum_value += N_list[right]
-    right += 1
+start = 0
+end = 0
+sum_val = 0
+while end < N:
+    sum_val += O[end]
+    
+    while sum_val >= K:
+        result = min(result, end - start + 1)
+        sum_val -= O[start]
+        start += 1
+    end += 1
+    
 
-    while sum_value >= S:
-        size = min(size, right-left)
-        sum_value -= N_list[left]
-        left += 1
-
-if size == float('inf'):
+if result == float('inf'):
     print(0)
 else:
-    print(size)
+    print(result)

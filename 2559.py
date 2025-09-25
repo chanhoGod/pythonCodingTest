@@ -2,20 +2,18 @@ import sys
 
 read = sys.stdin.readline
 
-N, M = map(int, read().split())
+N, K = map(int, read().split())
 
 O = list(map(int, read().split()))
 
-result = 0
-last = O[0]
-
-for i in range(0, M):
-    result += O[i]
+result = sum(O[:K])
+now = result
+for i in range(len(O) - K):
+    start = O[i]
+    end = O[i+K]
+    now -= start
+    now += end
     
-sum_value = result
-for i in range(M, N):
-    sum_value = sum_value + O[i] - last
-    result = max(result, sum_value)
-    last = O[i - M + 1]
+    result = max(result, now)
 
 print(result)

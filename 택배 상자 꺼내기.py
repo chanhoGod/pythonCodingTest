@@ -1,28 +1,26 @@
 def solution(n, w, num):
-    answer = 1
+    answer = 0
+    height = n//w if n % w == 0 else (n // w) + 1
     
-    A = [[0] * w for _ in range((n // w) + 1)]
-    x = 0
-    y = 0
+    O = [[0] * w for _ in range(height)]
+    col = 0
     for i in range(n):
-        # 짝수층 0, 2, 4 ->
-        if (i//w) % 2 == 0:
-            A[i//w][i%w] = i+1
-            if i+1 == num:
-                x = i//w
-                y = i%w
-        # 홀수층 1, 3, 5 <-
+        x = (i // w)
+        if x % 2 == 0:
+            y = (i % w) 
         else:
-            A[i//w][w - i%w - 1] = i+1
-            if i+1 == num:
-                x = i//w
-                y = w - i%w - 1
-    print(A)
-    
-    print(x, y)
-    for i in range(x+1, len(A)):
-        if A[i][y] != 0:
-            answer +=1
+            y = w - (i % w) -1
+            
+        O[x][y] = i + 1
+        
+        if i+1 == num:
+            col = y
+    print(O)
+    for i in range(len(O)-1, -1, -1):
+        if O[i][col] != 0:
+            answer += 1
+            if O[i][col] == num:
+                break
     print(answer)
     return answer
 

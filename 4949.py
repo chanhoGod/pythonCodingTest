@@ -1,62 +1,38 @@
+import sys
+
+
+read = sys.stdin.readline
 
 while True:
-    str = input()
-    
-    if str[0] == '.':
+    line = read().rstrip()
+    stack = []
+    if line == '.':
         break
-    
-    big_bracket_cnt = 0
-    small_bracket_cnt = 0
-    rtn_boo = False
-    bracket_stack = list()
-    
-    for i in str:
-        if i == "(":
-            bracket_stack.append("s")
-            small_bracket_cnt += 1
-        elif i == "[":
-            bracket_stack.append("b")
-            big_bracket_cnt += 1
-        
-        
-        if i == ")":
-            if len(bracket_stack) == 0:
-                print("no")
-                rtn_boo = True
+    flag = True
+    for idx in line:
+        if idx == '(' or idx == '[':
+            stack.append(idx)
+        elif idx == ')':
+            if len(stack) > 0:
+                pop_idx = stack.pop()
+                if pop_idx != '(':
+                    flag = False
+                    break
+            else:
+                flag = False
                 break
-            
-            pop_str = bracket_stack.pop()                            
-            if pop_str == "b":
-                print("no")
-                rtn_boo = True
-                break
-            elif pop_str == "s":
-                small_bracket_cnt -= 1
-
-        elif i == "]":
-            if len(bracket_stack) == 0:
-                print("no")
-                rtn_boo = True
+        elif idx == ']':
+            if len(stack) > 0:
+                pop_idx = stack.pop()
+                if pop_idx != '[':
+                    flag = False
+                    break
+            else:
+                flag = False
                 break
         
-            pop_str = bracket_stack.pop()   
-            
-            if pop_str == "s":
-                print("no")
-                rtn_boo = True
-                break
-            elif pop_str == "b":
-                big_bracket_cnt -= 1
-
-        if small_bracket_cnt < 0 or big_bracket_cnt < 0:
-            print("no")
-            rtn_boo = True
-            break
-    
-    if small_bracket_cnt == 0 and big_bracket_cnt == 0 and rtn_boo == False:
-        print("yes")
-    elif (small_bracket_cnt > 0 or big_bracket_cnt > 0) and rtn_boo == False:
-        print("no")
-            
-        
+    if flag and len(stack) == 0:
+        print('yes')
+    else:
+        print('no')
     
